@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "#{ROOT_DIR}/lib/resolvers/windows/ffi/ffi"
+require "facter/resolvers/windows/ffi/ffi"
 
 module IdentityFFI
   extend FFI::Library

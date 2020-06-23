@@ -17,22 +17,22 @@ def load_dir(*dirs)
 end
 
 def load_lib_dirs(*dirs)
-  load_dir(['lib', dirs])
+  load_dir(['lib', 'facter', dirs])
 end
 
 load_lib_dirs('framework', 'core', 'options')
-require "#{ROOT_DIR}/lib/framework/core/options"
-require "#{ROOT_DIR}/lib/framework/logging/logger_helper"
-require "#{ROOT_DIR}/lib/framework/logging/logger"
+require "facter/framework/core/options"
+require "facter/framework/logging/logger_helper"
+require "facter/framework/logging/logger"
 
-require "#{ROOT_DIR}/lib/util/file_helper"
+require "facter/util/file_helper"
 
-require "#{ROOT_DIR}/lib/resolvers/base_resolver"
-require "#{ROOT_DIR}/lib/framework/detector/os_hierarchy"
-require "#{ROOT_DIR}/lib/framework/detector/os_detector"
+require "facter/resolvers/base_resolver"
+require "facter/framework/detector/os_hierarchy"
+require "facter/framework/detector/os_detector"
 
-require "#{ROOT_DIR}/lib/framework/config/config_reader"
-require "#{ROOT_DIR}/lib/framework/config/fact_groups"
+require "facter/framework/config/config_reader"
+require "facter/framework/config/fact_groups"
 
 load_dir(['config'])
 
@@ -50,9 +50,9 @@ os_hierarchy = OsDetector.instance.hierarchy
 os_hierarchy.each { |operating_system| load_lib_dirs('facts', operating_system.downcase, '**') }
 os_hierarchy.each { |operating_system| load_lib_dirs('resolvers', operating_system.downcase, '**') }
 
-require "#{ROOT_DIR}/lib/custom_facts/core/legacy_facter"
+require "facter/custom_facts/core/legacy_facter"
 load_lib_dirs('framework', 'utils')
 load_lib_dirs('util')
 
-require "#{ROOT_DIR}/lib/framework/core/fact_augmenter"
-require "#{ROOT_DIR}/lib/framework/parsers/query_parser"
+require "facter/framework/core/fact_augmenter"
+require "facter/framework/parsers/query_parser"

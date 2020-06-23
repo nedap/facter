@@ -19,7 +19,7 @@
 require 'pathname'
 
 ROOT_DIR = Pathname.new(File.expand_path('../../../', __dir__)) unless defined?(ROOT_DIR)
-require "#{ROOT_DIR}/lib/custom_facts/core/file_loader"
+require "facter/custom_facts/core/file_loader"
 
 # Functions as a hash of 'facts' about your system system, such as MAC
 # address, IP address, architecture, etc.

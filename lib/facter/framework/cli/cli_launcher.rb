@@ -2,10 +2,10 @@
 # frozen_string_literal: true
 
 require 'thor'
-require "#{ROOT_DIR}/lib/framework/logging/logger.rb"
+require "facter/framework/logging/logger.rb"
 Facter::Log.output(STDERR)
-require "#{ROOT_DIR}/lib/facter"
-require "#{ROOT_DIR}/lib/framework/cli/cli"
+require "facter"
+require "facter/framework/cli/cli"
 
 class CliLauncher
   def initialize(args)

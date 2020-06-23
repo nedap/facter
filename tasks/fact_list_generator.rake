@@ -4,7 +4,7 @@ desc 'Create a fact list for the specified os'
 task :fact_list_generator, [:os_name] do |_, args|
   ROOT_DIR = Pathname.new(File.expand_path('..', __dir__)) unless defined?(ROOT_DIR)
 
-  require "#{ROOT_DIR}/lib/framework/core/file_loader"
+  require "facter/framework/core/file_loader"
   load_lib_dirs('facts', '**')
 
   os_hierarchy = Facter::OsHierarchy.new

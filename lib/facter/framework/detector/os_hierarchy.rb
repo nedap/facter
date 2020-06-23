@@ -4,8 +4,8 @@ module Facter
   class OsHierarchy
     def initialize
       @log = Log.new(self)
-      json_file = Util::FileHelper.safe_read(File.join(ROOT_DIR, 'os_hierarchy.json'))
 
+      json_file = Util::FileHelper.safe_read(os_hierarchy_path)
       begin
         @json_os_hierarchy = JSON.parse(json_file)
       rescue JSON::ParserError => _e
@@ -13,6 +13,15 @@ module Facter
       end
     end
 
+    def os_hierarchy_path
+      os = OsDetector.instance.identifier
+
+      windows_path = File.join('C:', 'ProgramData', 'PuppetLabs', 'facter', 'etc', 'os_hierarchy.json')
+      linux_path = File.join('/', 'etc', 'puppetlabs', 'facter', 'os_hierarchy.json')
+
+      os == :windows ? windows_path : linux_path
+    end
+  
     def construct_hierarchy(searched_os)
       return [] if searched_os.nil?
 

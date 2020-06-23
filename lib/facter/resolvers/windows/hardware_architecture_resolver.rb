@@ -13,7 +13,7 @@ module Facter
         end
 
         def read_hardware_information(fact_name)
-          require "#{ROOT_DIR}/lib/resolvers/windows/ffi/hardware_ffi"
+          require "facter/resolvers/windows/ffi/hardware_ffi"
 
           sys_info_ptr = FFI::MemoryPointer.new(SystemInfo.size)
           HardwareFFI::GetNativeSystemInfo(sys_info_ptr)

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "#{ROOT_DIR}/lib/resolvers/windows/ffi/ffi"
-require "#{ROOT_DIR}/lib/resolvers/windows/ffi/performance_information"
+require "facter/resolvers/windows/ffi/ffi"
+require "facter/resolvers/windows/ffi/performance_information"
 
 module MemoryFFI
   extend FFI::Library

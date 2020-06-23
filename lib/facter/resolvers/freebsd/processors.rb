@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
+require 'resolvers/bsd/processors'
+
 module Facter
   module Resolvers
-    module Bsd
+    module Freebsd
       class Processors < BaseResolver
         @log = Facter::Log.new(self)
         @semaphore = Mutex.new
@@ -15,7 +17,7 @@ module Facter
           end
 
           def collect_processors_info(fact_name)
-            require "#{ROOT_DIR}/lib/resolvers/bsd/ffi/ffi_helper"
+            require "facter/resolvers/freebsd/ffi/ffi_helper"
 
             @fact_list[:logical_count] = logical_count
             @fact_list[:models] = Array.new(logical_count, model) if logical_count && model
@@ -24,21 +26,16 @@ module Facter
             @fact_list[fact_name]
           end
 
-          CTL_HW = 6
-          HW_MODEL = 2
-          HW_NCPU = 3
-          HW_CPUSPEED = 12
-
           def model
-            @model ||= Facter::Bsd::FfiHelper.sysctl(:string, [CTL_HW, HW_MODEL])
+            @model ||= Facter::Freebsd::FfiHelper.sysctl_by_name(:string, 'hw.model')
           end
 
           def logical_count
-            @logical_count ||= Facter::Bsd::FfiHelper.sysctl(:uint32_t, [CTL_HW, HW_NCPU])
+            @logical_count ||= Facter::Freebsd::FfiHelper.sysctl_by_name(:uint32_t, 'hw.ncpu')
           end
 
           def speed
-            @speed ||= Facter::Bsd::FfiHelper.sysctl(:uint32_t, [CTL_HW, HW_CPUSPEED])
+            @speed ||= Facter::Freebsd::FfiHelper.sysctl_by_name(:uint32_t, 'hw.clockrate')
           end
         end
       end
