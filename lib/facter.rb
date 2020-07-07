@@ -228,7 +228,7 @@ module Facter
     #
     # @api public
     def version
-      version_file = ::File.join(ROOT_DIR, 'VERSION')
+      version_file = ::File.join(File.dirname(__FILE__), 'facter', 'VERSION')
       ::File.read(version_file).strip
     end
 

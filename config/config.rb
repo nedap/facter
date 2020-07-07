@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
 require 'pathname'
-ROOT_DIR = Pathname.new(File.expand_path('..', __dir__)) unless defined?(ROOT_DIR)
+lib_path = File.join( File.dirname(__FILE__), '..', 'lib', 'facter' )
 
-FACTER_VERSION = File.read("#{ROOT_DIR}/VERSION").strip
+FACTER_VERSION = File.read("#{lib_path}/VERSION").strip
