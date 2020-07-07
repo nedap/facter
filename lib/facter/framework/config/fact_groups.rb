@@ -9,7 +9,8 @@ module Facter
     STRING_TO_SECONDS = { 'seconds' => 1, 'minutes' => 60, 'hours' => 3600, 'days' => 3600 * 24 }.freeze
 
     def initialize(group_list_path = nil)
-      @groups_file_path = group_list_path || File.join(ROOT_DIR, 'fact_groups.conf')
+      default_path = File.join( File.dirname(__FILE__), '../../fact_groups.conf' )
+      @groups_file_path = group_list_path || default_path
       @groups ||= File.readable?(@groups_file_path) ? Hocon.load(@groups_file_path) : {}
       load_groups
     end

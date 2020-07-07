@@ -103,9 +103,9 @@ def prepare_installation
     opts.on('--destdir[=OPTIONAL]', 'Installation prefix for all targets', 'Default essentially /') do |destdir|
       InstallOptions.destdir = destdir
     end
-    opts.on('--configdir[=OPTIONAL]', 'Installation directory for config files', 'Default /etc') do |configdir|
-      InstallOptions.configdir = configdir
-    end
+    # opts.on('--configdir[=OPTIONAL]', 'Installation directory for config files', 'Default /etc') do |configdir|
+    #   InstallOptions.configdir = configdir
+    # end
     opts.on('--bindir[=OPTIONAL]', 'Installation directory for binaries', 'overrides RbConfig::CONFIG["bindir"]') do |bindir|
       InstallOptions.bindir = bindir
     end
@@ -115,9 +115,9 @@ def prepare_installation
     opts.on('--sitelibdir[=OPTIONAL]', 'Installation directory for libraries', 'overrides RbConfig::CONFIG["sitelibdir"]') do |sitelibdir|
       InstallOptions.sitelibdir = sitelibdir
     end
-    opts.on('--mandir[=OPTIONAL]', 'Installation directory for man pages', 'overrides RbConfig::CONFIG["mandir"]') do |mandir|
-      InstallOptions.mandir = mandir
-    end
+    # opts.on('--mandir[=OPTIONAL]', 'Installation directory for man pages', 'overrides RbConfig::CONFIG["mandir"]') do |mandir|
+    #   InstallOptions.mandir = mandir
+    # end
     opts.on('--full', 'Performs a full installation. All', 'optional installation steps are run.') do |full|
       InstallOptions.configs = true
     end
@@ -144,16 +144,16 @@ def prepare_installation
     RbConfig::CONFIG['bindir'] = "/usr/bin"
   end
 
-  if InstallOptions.configdir
-    configdir = InstallOptions.configdir
-  elsif is_windows?
-    path = File.join(File.dirname(__FILE__), "lib", "custom_facts", "util", "config.rb")
-    require_relative(path)
+  # if InstallOptions.configdir
+  #   configdir = InstallOptions.configdir
+  # elsif is_windows?
+  #   path = File.join(File.dirname(__FILE__), "lib", "custom_facts", "util", "config.rb")
+  #   require_relative(path)
 
-    configdir = File.join(LegacyFacter::Util::Config.windows_data_dir, "PuppetLabs", "facter", "etc")
-  else
-    configdir = File.join('/', 'etc', 'puppetlabs', 'facter')
-  end
+  #   configdir = File.join(LegacyFacter::Util::Config.windows_data_dir, "PuppetLabs", "facter", "etc")
+  # else
+  #   configdir = File.join('/', 'etc', 'puppetlabs', 'facter')
+  # end
 
   if InstallOptions.bindir
     bindir = InstallOptions.bindir
@@ -175,11 +175,11 @@ def prepare_installation
     end
   end
 
-  if InstallOptions.mandir
-    mandir = InstallOptions.mandir
-  else
-    mandir = RbConfig::CONFIG['mandir']
-  end
+  # if InstallOptions.mandir
+  #   mandir = InstallOptions.mandir
+  # else
+  #   mandir = RbConfig::CONFIG['mandir']
+  # end
 
   # This is the new way forward
   if InstallOptions.destdir
@@ -188,21 +188,21 @@ def prepare_installation
     destdir = ''
   end
 
-  configdir = join(destdir, configdir)
+  # configdir = join(destdir, configdir)
   bindir = join(destdir, bindir)
-  mandir = join(destdir, mandir)
+  # mandir = join(destdir, mandir)
   sitelibdir = join(destdir, sitelibdir)
 
-  makedirs(configdir) if InstallOptions.configs
+  # makedirs(configdir) if InstallOptions.configs
   makedirs(bindir)
-  makedirs(mandir)
+  # makedirs(mandir)
   makedirs(sitelibdir)
 
   InstallOptions.site_dir = sitelibdir
-  InstallOptions.config_dir = configdir
+  # InstallOptions.config_dir = configdir
   InstallOptions.bin_dir  = bindir
   InstallOptions.lib_dir  = libdir
-  InstallOptions.man_dir  = mandir
+  # InstallOptions.man_dir  = mandir
 end
 
 ##
@@ -277,15 +277,11 @@ end
 # Change directory into the facter root so we don't get the wrong files for install.
 cd File.dirname(__FILE__) do
   # Set these values to what you want installed.
-  configs = glob(%w{facter.conf os_hierarchy.json fact_groups.conf})
   bins  = glob(%w{bin/facter})
-  man   = glob(%w{man/man[0-9]/*})
-  libs  = glob(%w{lib/**/*.rb})
+  libs  = glob(%w{lib/**/*.rb lib/facter/os_hierarchy.json lib/facter/fact_groups.conf})
 
   prepare_installation
 
-  do_configs(configs, InstallOptions.config_dir) if InstallOptions.configs
   do_bins(bins, InstallOptions.bin_dir)
   do_libs(libs)
-  do_man(man) unless is_windows?
 end
