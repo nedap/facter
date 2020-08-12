@@ -20,9 +20,10 @@ end
 
 Gem::Specification.new do |s|
   s.name = "facter"
-  version = Facter.version
-  mdata = version.match(/(\d+\.\d+\.\d+)/)
-  s.version = mdata ? mdata[1] : version
+  #version = Facter.version
+  #mdata = version.match(/(\d+\.\d+\.\d+)/)
+  #s.version = mdata ? mdata[1] : version
+  s.version = '2.5.7.stpst.1'
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Puppet Labs"]

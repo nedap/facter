@@ -60,7 +60,7 @@ platform(*mingw) do
   end
 end
 
-gem 'facter', ">= 1.0.0", :path => File.expand_path("..", __FILE__)
+gem 'facter', ">= 1.0.0", "< 3", :path => File.expand_path("..", __FILE__)
 
 if File.exists? "#{__FILE__}.local"
   eval(File.read("#{__FILE__}.local"), binding)
